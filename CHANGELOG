@@ -1,0 +1,124 @@
+This file describes the new features in each poezio release.
+For more detailed changelog, see the roadmap:
+http://dev.louiz.org/project/poezio/roadmap
+
+* Poezio 0.8 - dev
+
+* Poezio 0.7.5.1 & 2 - Summer 2012
+- Fix tracebacks caused by a change in Sleekxmpp
+
+* Poezio 0.7.5 - 25 May 2012
+- Plugin system
+- Server-side bookmarks
+- New keyboard shortcuts tuning options
+- New keyboard shortcuts
+- Attention support
+- Invitation support
+- Improved contact management
+- New tab list
+- Certificate check (TOFU model)
+- New commands for sending stanzas manually
+- bugfixes
+
+
+* Poezio 0.7.2 - 08 Nov 2011
+- Huge speed improvements in both memory usage, text
+  refresh speed and interface resize.
+- Chatstate notifications (in private AND in MUCs)
+- /message command to talk to any JID
+- /version command to get the software version of an entity
+- /bind command, and keys can be bound in the config file
+- Multiline edition
+- xhtml-im messages can be sent and received
+- 256 colors support
+- themes are easier to create and load. They can use
+  up to 256 colors
+- completion now works not only at the end of the input
+- /affiliation and /role commands to administrate MUCs
+- /export command to export your roster in a file
+- data forms support (only for room configuration at the moment)
+- documentation is now written in asciidoc format
+- a *lot* of bugfixes
+
+
+* Poezio 0.7.1 - 2 Feb 2011
+- /status command to globally change the status
+- /win command now accepts part of tab name as argument
+- bugfixes
+
+
+* Poezio 0.7 - 14 jan 2011
+Codename ”Koshie & Mathieui”
+- Library changed from xmpppy to SleekXMPP
+- Python 3 only
+- Introduce the roster
+- One to one conversations
+- Roster search
+- Add/remove/accept/deny contact in the roster
+- Resizable mini-buffer displaying various informations
+- All colors can be changed with a theme file
+- Command auto-completion
+- /say and // commands
+- /recolor command, changing the nick's colors in a MUC
+- /list command lets the user browse the MUCs on a server
+- Warn user about publicly logged rooms
+- Possibility to limit the number of history messages received from MUC
+- auto-rejoin when kicked from a MUC
+- The number of lines available to scroll down is displayed
+- Possibility to use a modified nickname automatically when a nick is reserved
+- A line separates the alread-read messages from the new messages
+- Information messages are more colored
+- Man page added
+- bugfixes
+
+
+* Poezio 0.6.2 - 21 Jul 2010
+- Lines are now broken between words and not in the middle of them
+- /unquery command
+- default nickname is now $USER
+- Server on /join command can be omitted
+- /query command can now take a message in parameters
+- logs are now save in $XDG_DATA_HOME and this can be configured
+- Available users now have a greater priority on nickname completion
+- utf-8 characters (from the keyboard) are now completely supported
+- Many new keyboard shortcuts (move the cursor, edit the line, switch tabs...)
+- DESTDIR support in Makefile is fixed
+- Completion on recently said words
+- /join command now takes the current server if not specified in the parameters
+- Many Bugfixes
+
+
+* Poezio 0.6.1 - 13 Jun 2010
+- Enable tracebacks
+
+
+* Poezio 0.6 - 13 Jun 2010
+- Private messages are handled
+- Muc error messages are displayed
+- Nickname auto-completion
+- Users status are displayed in the MUC user-list
+- Non-anonymous connection (registered nickname can now be used)
+- An avatar can be set
+- A minimal Vcard can be set
+- Proxies are handled
+- Status changes can be hidden if the user didn't talk for a long time
+- A line displays informations about rooms we are in (new messages, hl, etc)
+- Highlights are handled (we can specify a list of words)
+- Various new commands (topic, kick, set, win)
+- Password-protected MUCs are handled
+- The dates of room history are handled
+- The way the text is displayed on the screen has been rewritten, this fixes
+  the blink and the slowness-over-ssh problems.
+- User lists are ordered
+- Messages can be logged in files
+- Status changes displays only what has really changed
+- Users can be ignored (/ignore, /unignore)
+- Various Bugfixes
+
+
+* Poezio 0.5.1 - 2 Feb 2010
+- Little bugfix release
+
+
+* Poezio 0.5 - 1 Feb 2010
+- Initial release

@@ -1,0 +1,526 @@
+Configure
+=========
+
+The configuration is located in the file *~/.config/poezio/poezio.cfg*
+On its first startup, poezio will create that file (and its containing
+directories) with the default configuration. You can edit that file manually
+or use the */set* command to edit some of its values directly from poezio.
+This file is also used to configure key bindings, but this is explained
+in the _keys_ documentation file.
+
+That file is read at each startup and the configuration is saved when poezio
+is closed.
+
+This configuration file *requires* all global options to be in a section
+named [Poezio]. Some other options can be in optional sections and will
+apply only to tabs having the option’s name.
+
+An option is formatted with the form
+======================
+option = value
+======================
+
+An empty value *doesn’t* mean that the default value will be used. That’s
+just an empty value. To use the default value, just comment or remove the
+option entirely.
+
+Here is a list of all the avalaible configuration options, their meaning
+and their default value.
+
+Configuration options
+---------------------
+
+Global section options
+~~~~~~~~~~~~~~~~~~~~~~
+
+These option have a sense when they are in the global section. Some of
+them can also be in an optional configuration section, see the next
+section of this documentation.
+
+[horizontal]
+*server*:: anon.louiz.org
+
+  The server to use for *anonymous* authentication.
+  Make sure it accepts anonymous authentification
+  Note that this option doesn’t do anything at all if you’re using your own JID.
+
+*certificate*:: [empty]
+
+  The fingerprint of the SSL certificate as a hexadecimal string, you should
+  not touch it, except if know what you are doing.
+
+*ignore_certificate*:: false
+
+  Skip certificate validation on connection when _true_. Useful when you are in
+  anonymous mode and changing servers often. Dangerous in other cases, from a
+  security perspective.
+
+*ca_cert_path*:: [empty]
+
+  Path to the certificate of the Certification Authority.
+  As some services may keep different certificates, it is an alternative to
+  the Trust On First Use model provided by _certificate_. This option is not
+  affected by _ignore_certificate_ and boths checks may be active at the same
+  time.
+
+*whitespace_interval*:: 300
+
+  Interval of the whitespace keepalive sending to the server.
+  300 should be fine, but change it if some services have a stricter policy
+  on client inactivity.
+
+*resource*:: [empty]
+
+  the resource you will use
+  If it's empty, your resource will be chosen (most likely randomly) by the server
+  It is not recommended to use a resource that is easy to guess, because it can lead
+  to presence leak.
+
+*auto_reconnect*:: false
+
+  Auto-reconnects you when you get disconnected. Should not be necessary, so
+  the default is false.
+
+
+*default_nick*:: [empty]
+
+  the nick you will use when joining a room with no associated nick
+  If this is empty, the $USER environnement variable will be used
+
+
+*jid*:: [empty]
+
+  Jabber identifiant. Specify it only if you want to connect using an existing
+  account on a server. This is optional and useful only for some features,
+  like room administration, nickname registration.
+  The 'server' option will be ignored if you specify a JID (Jabber identifiant)
+  It should be in the form nickname@server.tld
+
+*password*:: [empty]
+
+  A password is needed only if you specified a jid. It will be ignored otherwise
+  If you leave this empty, the password will be asked at each startup
+
+*rooms*:: poezio@muc.poezio.eu
+
+  the rooms you will join automatically on startup, with associated nickname or not
+  format : room@server.tld/nickname:room2@server.tld/nickname2
+  default_nick will be used if "/nickname" is not specified
+
+*use_bookmark_method*:: [empty]
+
+    the method that poezio will use to store your bookmarks online.
+    possible values are: privatexml, pep
+    You should not have to edit this in a normal use case.
+
+*use_remote_bookmarks*:: true
+
+    use this option to force the use of local bookmarks if needed.
+    Anything but "false" will be counted as true.
+
+*after_completion*:: ,
+
+  what will be put after the name, when using autocompletion
+  a SPACE will always be added after that
+
+*words*:: [empty]
+
+  Personal dictionary of the words you use often, that you want to complete
+  through recent words completion. They must be separated bu a colon (:). That
+  completion will work in chatrooms, private conversations, and direct
+  conversations.
+
+*highlight_on*:: [empty]
+
+  a list of words (separated by a colon (:)) that will be
+  highlighted if said by someone on a room
+
+*enable_xhtml_im*:: true
+
+  XHTML-IM is an XMPP extension letting users send messages
+  containing XHTML and CSS formating. We can use this to make
+  colored text for example.
+  It is disabled by default because this is only in an experimental
+  state: you could miss some part of a message (mainly the URL)
+  but you can still send colored messages. You just won’t be able te see
+  the colors, though
+  Set to true if you want to see colored messages
+
+*hide_status_change*:: 120
+
+  Set a number for this setting.
+  The join OR status-change notices will be
+  displayed according to this number.
+  -1: the notices will ALWAYS be displayed
+   0: the notices will NEVER be displayed
+   n: On any other number, the notices will only be displayed
+      if the user involved has talked since the last n seconds
+  if the value is incorrect, -1 is assumed
+  Default setting means :
+   - status changes won't be displayed unless
+     the user talked in the last 2 minutes
+
+*hide_exit_join*:: -1
+
+  Exact same thing than hide_status_change, except that it concerns
+  the quit message, and that it will be hidden only if the value is 0.
+  Default setting means:
+   - all quit and join notices will be displayed
+
+*send_initial_presence*:: true
+
+ Send initial presence (normal behaviour). If false, you will not send nor
+ receive any presence that is not directed (through /presence) or sent by a
+ MUC.
+
+*display_user_color_in_join_part*:: false
+
+  If set to true, the color of the nick will be used in MUCs information
+  messages, instead of the default color from the theme.
+
+*information_buffer_popup_on*:: error roster warning help info
+
+  Some informational messages (error, a contact getting connected, etc)
+  are sometimes added to the information buffer. These settings can make
+  that buffer grow temporarly so you can read these information when they
+  appear.
+
+  A list of message types that should make the information buffer grow
+  Possible values; error, roster, warning, info, help
+
+*popup_time*:: 4
+
+  The time the message will be visible in the information buffer when it
+  pops up.
+  If the message takes more than one line, the popup will stay visible
+  two more second per additional lines
+
+*filter_info_messages*:: [empty]
+
+  A list of words or sentences separated by colons (":"). All the
+  informational mesages (described above) containing at least one of those
+  values will not be shown.
+
+*autorejoin*:: false
+
+  set to 'true' if you want to automatically rejoin the
+  room when you're kicked.
+
+*autorejoin_delay*:: 5
+
+  Set to the number of seconds before reconnecting after getting kicked.
+  0, a negative value, or no value means you instant reconnection.
+  This option only works if autorejoin is enabled.
+
+*alternative_nickname*:: [empty]
+
+  If you want poezio to join
+  the room with an alternative nickname when
+  your nickname is already in use in the room you
+  wanted to join, put a non-empty value.
+  Else, poezio won't join the room
+  This value will be added to your nickname to
+  create the alternative nickname.
+  For example, if you set "\_", and wanted to use
+  the nickname "john", your alternative nickname
+  will be "john_"
+
+*muc_history_length*:: 50
+
+  Limit the number of messages you want to receive when the
+  multiuserchat rooms send you recent history
+  0: You won't receive any
+  -1: You will receive the maximum
+  n: You will receive at most n messages
+  Note that if you set a huge number (like the default value), you
+  may not receive that much messages. The server has its own
+  maximum too
+
+*use_log*:: true
+
+  set to 'false' if you don’t want to save logs of all the messages
+  in files.
+
+
+*log_dir*:: [empty]
+
+  If log_dir is not set, logs will be saved in $XDG_DATA_HOME/poezio/logs,
+  i.e. in ~/.local/share/poezio/logs/. So, you should specify the directory
+  you want to use instead. This directory will be created if it doesn't exist
+
+*show_inactive_tabs*:: true
+
+  If you want to show all the tabs in the Tab bar, even those
+  with no activity, set to true. Else, set to false
+
+*show_tab_names*:: false
+
+  If you want to show the tab name in the bottom Tab bar, set this to true.
+
+*show_tab_numbers*:: true
+
+  If you want to disable the numbers in the bottom Tab bar, set this to false.
+  Note that if both show_tab_names and show_tab_numbers are set to false, the
+  numbers will still be displayed.
+
+*use_tab_nicks*:: true
+
+  The tabs have a name, and a nick, which is, for a contact, its name in the
+  roster, or for a private conversation, the nickname in the MUC. Set this to
+  true if you want to have them shown instead of the jid of the contact.
+
+*show_muc_jid*:: true
+
+  Set this to false if you want to display only the *user* part of the MUC
+  jid. E.g. if you have poezio@muc.poezio.eu, it will be displayed as
+  `poezio`. This will be used only if use_tab_nicks is set to true.
+
+*show_roster_jids*:: true
+
+  Set this to false if you want to hide the JIDs in the roster (and keep only
+  the contact names). If there is no contact name, the JID will still be
+  displayed.
+
+*roster_show_offline*:: false
+
+  Set this to true if you want to display the offline contacts too.
+
+*roster_sort*:: jid:show
+
+  How you want the contacts to be sorted inside the roster groups. The given
+  methods are used sequentially (from left to right), so the last one is the
+  one on the far right.
+
+  Available methods are :
+    * reverse: reverse the current sorting
+    * jid: sort by JID (alphabetical order)
+    * show: sort by show (available/away/xa/…)
+    * name: sort by roster name (if no name, then the bare jid is used)
+    * resource: sort by resource number
+    * online: sort by online presence (online or not)
+
+  Those methods can be arranged however you like, and they have to be
+  separated by colons (":"). If there are more than 3 or 4 chained
+  sorting methods, your sorting is most likely inefficient.
+
+*roster_group_sort*:: name
+
+  How to sort the roster groups. The principles are the same as _roster_sort_
+  (see above).
+
+  Available methods are:
+    * reverse: reverse the current sorting
+    * name: sort by group name (alphabetical order)
+    * fold: sort by unfolded/folded
+    * connected: sort by number of connected contacts
+    * size: sort by group size
+    * none: put the "none" group (if any) at the end of the list
+
+*beep_on*:: highlight private
+
+  The terminal can beep on various event. Put the event you want in a list
+  (separated by spaces).
+  The events can be
+  - highlight (when you are highlighted in a MUC)
+  - private (when a new private message is received, from your contacts or
+             someone from a MUC)
+  - message (any message from a MUC)
+
+*themes_dir*:: [empty]
+
+  If themes_dir is not set, themes will searched for in $XDG_DATA_HOME/poezio/themes,
+  i.e. in ~/.local/share/poezio/themes/. So you should specify the directory you
+  want to use instead. This directory will be created at startup if it doesn't
+  exist
+
+
+*theme*:: [empty]
+
+  The name of the theme file (without the .py extension) that will be used.
+  The file should be located in the theme_dir directory.
+  If the file is not found (or no filename is specified) the default
+  theme will be used instead
+
+*enable_vertical_tab_list*:: false
+
+ If true, a vertical list of tabs, with their name, is displayed on the left of
+ the screen.
+
+*vertical_tab_list_size*:: 20
+
+*vertical_tab_list_sort*:: desc
+
+ If set to desc, the tabs will be displayed from top to bottom in the list,
+ if set to asc, they will be displayed from bottom to top.
+
+*user_list_sort*:: desc
+
+ If set to desc, the MUC users will be displayed from top to bottom in the list,
+ if set to asc, they will be displayed from bottom to top.
+
+*send_chat_states*:: true
+
+  if true, chat states will be sent to the people you are talking to.
+  Chat states are, for example, messages informing that you are composing
+  a message or that you closed the tab, etc
+  Set to false if you don't want people to know these information
+  Note that you won’t receive the chat states of your contacts
+  if you don't send yours.
+
+
+*send_poezio_info*:: true
+
+  if true, information about the software (name and version)
+  will be sent if requested by anyone
+  Set to false if you don't want people to know these information
+
+
+*send_os_info*:: true
+
+  if true, information about the Operation System you're using
+  will be sent when requested by anyone
+  Set to false if you don't want people to know these information
+  Note that this information will not be sent if send_poezio_info is False
+
+*send_time*:: true
+
+  if true, your current time will be sent if asked
+  Set to false if you don't want people to know that information
+
+
+*max_messages_in_memory*:: 2048
+
+  Configure the number of maximum messages (for each tab) that
+  can be kept in memory. If poezio consumes too much memory, lower these
+  values
+
+*max_lines_in_memory*:: 2048
+
+  Configure the number of maximum lines (for each tab) that
+  can be kept in memory. If poezio consumes too much memory, lower these
+  values
+
+*lazy_resize*:: true
+
+  Defines if all tabs are resized at the same time (if set to false)
+  or if they are really resized only when needed (if set to true).
+  “true” should be the most comfortable value
+
+*custom_host*:: [empty]
+
+  A custom host that will be used instead of the DNS records for the server
+  (anonymous or the jid’s) defined above.
+  You should not need this in a "normal" use case.
+
+*custom_port*:: [empty]
+
+  A custom port to use instead of the 5222.
+  This option can be combined with custom_host.
+  You should not need this in a "normal" use case.
+
+*plugins_autoload*:: [empty]
+
+  Space separated list of plugins to load on startup.
+
+*plugins_dir*:: [empty]
+
+  If plugins_dir is not set, plugins will be loaded from $XDG_DATA_HOME/poezio/plugins
+  You can specify another directory to use. It will be created if it does not
+  exist.
+
+*exec_remote*:: false
+
+  If this is set to true, poezio will try to send the commands to a FIFO
+  instead of executing them locally. This is to be used in conjunction with
+  ssh and the daemon.py file. See the /link documentation for details.
+
+*remote_fifo_path*:: ./poezio.fifo
+
+  The path of the FIFO used to send the commands (see the exec_remote option).
+
+
+Optional section options
+~~~~~~~~~~~~~~~~~~~~~~~~
+These option can appear in optional sections. These section are named
+after a JID. These option will apply only for the given JID. For example
+if an option appears in a section named [user@example.com], it will
+apply only for the conversations with user@example.com.
+
+Note that some of these options can also appear in the global section,
+they will be used as a fallback value when no JID-specific option is
+found.
+
+.foo is _true_ for *user@example.com* but is _false_ for everyone else
+============================================
+[source,conf]
+-------------
+[Poezio]
+foo = false
+[user@example.com]
+foo = true
+-------------
+============================================
+
+*disable_beep*:: false
+
+  Disable the beeps triggered by this conversation. Works in MucTab,
+  PrivateTab and ConversationTab.
+
+*send_chat_states*:: true
+
+  Lets you disable/enable chatstates per-JID. Works in MucTab, PrivateTab and ConversationTab.
+
+*display_user_color_in_join_part*:: false
+
+  If set to true, the color of the nick will be used in MUCs information
+  messages, instead of the default color from the theme.
+
+*show_useless_separator*:: false
+
+  If true, show the separator in a chat room, even if no one spoke.
+
+*hide_exit_join*:: -1
+
+  Exact same thing than hide_status_change, except that it concerns
+  the quit message, and that it will be hidden only if the value is 0.
+  Default setting means:
+   - all quit and join notices will be displayed
+
+*hide_status_change*:: 120
+
+  Set a number for this setting.
+  The join OR status-change notices will be
+  displayed according to this number.
+  -1: the notices will ALWAYS be displayed
+   0: the notices will NEVER be displayed
+   n: On any other number, the notices will only be displayed
+      if the user involved has talked since the last n seconds
+  if the value is incorrect, -1 is assumed
+  Default setting means :
+   - status changes won't be displayed unless
+     the user talked in the last 2 minutes
+
+*highlight_on*:: [empty]
+
+  a list of words (separated by a colon (:)) that will be
+  highlighted if said by someone on a room
+
+*ignore_private*:: false
+
+  Ignore private messages sent from this room.
+
+*private_auto_response*:: "Not in private, please."
+
+  The message you want to be sent when someone tries to message you.
+
+*autorejoin*:: false
+
+  Set to 'true' if you want to automatically rejoin the
+  room when you're kicked or banned.
+
+*autorejoin_delay*:: 5
+
+  Set to the number of seconds before reconnecting after getting kicked or
+  banned. 0, a negative value, or no value means instant reconnection.
+  This option only works if autorejoin is enabled.
+
