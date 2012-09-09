@@ -2622,6 +2622,7 @@ class RosterInfoTab(Tab):
     def on_close(self):
         return
 
+import collections;
 class ConversationTab(ChatTab):
     """
     The tab containg a normal conversation (not from a MUC)
@@ -2651,6 +2652,27 @@ class ConversationTab(ChatTab):
         self.resize()
         self.update_commands()
         self.update_keys()
+
+        Message = collections.namedtuple('Message', 'txt nick_color time str_time nickname user');
+
+        logs = logger.get_logs(JID(self.get_name()).bare)
+        self.core.information('JID: %s' % (JID(self.get_name()).bare), 'Info')
+    
+        if logs:
+            for log in logs:
+                msg = Message(txt=log.rstrip(), nick_color=get_theme().COLOR_OWN_NICK,
+                              time='', str_time='', nickname='', user='')
+                self._text_buffer.messages.append(msg)
+                ret_val = None
+                for window in self._text_buffer.windows: # make the associated windows
+                    # build the lines from the new message
+                    nb = window.build_new_message(msg, history=None, highlight=False)
+                    if ret_val is None:
+                        ret_val = nb
+                    if window.pos != 0:
+                        window.scroll_up(nb)
+
+
 
     @property
     def general_jid(self):

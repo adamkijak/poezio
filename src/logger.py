@@ -63,6 +63,27 @@ class Logger(object):
         except IOError:
             return None
 
+    def get_logs(self, jid):
+        """
+        get logs from the appropriate jid's file
+        """
+        if config.get('use_log', 'false') == 'false':
+            return None
+        
+        directory = os.path.join(DATA_HOME, 'logs')
+        try:
+            fd = open(os.path.join(directory, jid), 'r')
+        except:
+            return None
+
+        if not fd:
+            return None
+
+        logs = fd.readlines();
+        fd.close();
+
+        return logs
+
     def log_message(self, jid, nick, msg):
         """
         log the message in the appropriate jid's file
