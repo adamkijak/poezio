@@ -662,6 +662,17 @@ class Core(object):
         Appends the new_tab in the tab list and
         focus it if focus==True
         """
+
+        if config.get('tabs_sort', 'true') == 'true':
+            lastTab = 0
+            for tab in sorted(self.tabs, key=lambda tabs: tabs.nb):
+                if lastTab != tab.nb:
+                    break
+                else:
+                    lastTab += 1
+
+            new_tab.nb = lastTab
+
         if self.current_tab().nb == 0:
             self.tabs.append(new_tab)
         else:
